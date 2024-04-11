@@ -19,7 +19,7 @@ void Flight::setCode(int code) {
     this->code = code;
 }
 
-vector<Astronaut> Flight::getPassengers() {
+vector<Astronaut*> Flight::getPassengers() {
     return this->passengers;
 }
 
@@ -51,7 +51,7 @@ int Flight::getNumPassengers() {
     return this->passengers.size();
 }
 
-bool Flight::addAstronaut(Astronaut astronaut) {
+bool Flight::addAstronaut(Astronaut* astronaut) {
     if (inPlanning) {
         passengers.push_back(astronaut);
         return true;
@@ -63,11 +63,36 @@ bool Flight::addAstronaut(Astronaut astronaut) {
 bool Flight::removeAstronaut(string cpf) {
     if (inPlanning) {
         for (int i = 0; i < (int) passengers.size(); i++) {
-            if (passengers[i].getCpf() == cpf) {
+            if (passengers[i]->getCpf() == cpf) {
                 passengers.erase(passengers.begin() + i);
                 return true;
             }
         }
+    }
+
+    return false;
+}
+
+bool Flight::launch() {
+    if (inPlanning) {
+        if (this->getNumPassengers() < 1) {
+            return false;
+        }
+
+        for (Astronaut* passenger : this->passengers) {
+            if (!passenger->isAvailable()) {
+                return false;
+            }
+        }
+
+        this->inPlanning = false;
+        this->inProgress = true;
+
+        for (Astronaut* passenger : this->passengers) {
+            passenger->setAvailable(false);
+        }
+
+        return true;
     }
 
     return false;

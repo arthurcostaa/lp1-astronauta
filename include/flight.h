@@ -8,7 +8,7 @@
 class Flight {
 private:
     int code;
-    vector<Astronaut> passengers;
+    vector<Astronaut*> passengers;
     bool inPlanning;
     bool inProgress;
     bool exploded;
@@ -21,7 +21,7 @@ public:
     int getCode();
     void setCode(int code);
 
-    vector<Astronaut> getPassengers();
+    vector<Astronaut*> getPassengers();
 
     bool isInPlanning();
     void setInPlanning(bool inPlanning);
@@ -34,9 +34,11 @@ public:
 
     int getNumPassengers();
 
-    bool addAstronaut(Astronaut astronaut);
+    bool addAstronaut(Astronaut* astronaut);
 
     bool removeAstronaut(string cpf);
+
+    bool launch();
 };
 
 #endif // FLIGHT_H
