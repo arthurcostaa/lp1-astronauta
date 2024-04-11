@@ -1,29 +1,27 @@
 #ifndef FLIGHT_H
 #define FLIGHT_H
 
+#include <vector>
+
 #include "astronaut.h"
 
 class Flight {
 private:
     int code;
-    Astronaut* passengers;
-    int numPassengers;
+    vector<Astronaut> passengers;
     bool inPlanning;
     bool inProgress;
     bool exploded;
 
 public:
     Flight();
-    Flight(int code, Astronaut* passengers);
+    Flight(int code);
     ~Flight();
 
     int getCode();
     void setCode(int code);
 
-    Astronaut* getPassengers();
-    void setPassengers(Astronaut* passengers);
-
-    int getNumPassengers();
+    vector<Astronaut> getPassengers();
 
     bool isInPlanning();
     void setInPlanning(bool inPlanning);
@@ -33,6 +31,12 @@ public:
 
     bool isExploded();
     void setExploded(bool exploded);
+
+    int getNumPassengers();
+
+    bool addAstronaut(Astronaut astronaut);
+
+    bool removeAstronaut(string cpf);
 };
 
 #endif // FLIGHT_H
