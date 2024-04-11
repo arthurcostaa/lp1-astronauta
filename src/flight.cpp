@@ -97,3 +97,18 @@ bool Flight::launch() {
 
     return false;
 }
+
+bool Flight::explode() {
+    if (inProgress) {
+        this->inProgress = false;
+        this->exploded = true;
+
+        for (Astronaut* passenger : this->passengers) {
+            passenger->setAlive(false);
+        }
+
+        return true;
+    }
+
+    return false;
+}

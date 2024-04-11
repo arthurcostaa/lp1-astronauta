@@ -39,6 +39,8 @@ public:
     bool removeAstronaut(string cpf);
 
     bool launch();
+
+    bool explode();
 };
 
 #endif // FLIGHT_H
