@@ -1,4 +1,8 @@
+#include <iostream>
+
 #include "astronaut.h"
+
+using namespace std;
 
 Astronaut::Astronaut() {}
 
@@ -14,40 +18,64 @@ Astronaut::~Astronaut() {}
 
 string Astronaut::getCpf() {
     return this->cpf;
-};
+}
 
 void Astronaut::setCpf(string cpf) {
     this->cpf = cpf;
-};
+}
 
 string Astronaut::getName() {
     return this->name;
-};
+}
 
 void Astronaut::setName(string name) {
     this->name = name;
-};
+}
 
 int Astronaut::getAge() {
     return this->age;
-};
+}
 
 void Astronaut::setAge(int age) {
     this->age = age;
-};
+}
+
+vector<int>& Astronaut::getMissionsFlown() {
+    return this->missionsFlown;
+}
 
 bool Astronaut::isAvailable() {
     return this->available;
-};
+}
 
 void Astronaut::setAvailable(bool available) {
     this->available = available;
-};
+}
 
 bool Astronaut::isAlive() {
     return this->alive;
-};
+}
 
 void Astronaut::setAlive(bool alive) {
     this->alive = alive;
-};
+}
+
+void Astronaut::addCodeFlight(int newCode) {
+    for (int code : missionsFlown) {
+        if (newCode == code) {
+            return;
+        }
+    }
+
+    missionsFlown.push_back(newCode);
+}
+
+void Astronaut::showCodeFlights() {
+    for (int i = 0; i < (int) missionsFlown.size(); i++) {
+        int code = missionsFlown[i];
+
+        cout << (i == 0 ? "" : ", ") << code;
+    }
+
+    cout << endl;
+}
