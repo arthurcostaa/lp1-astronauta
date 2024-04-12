@@ -22,7 +22,7 @@ public:
     int getCode();
     void setCode(int code);
 
-    vector<Astronaut*> getPassengers();
+    vector<Astronaut*>& getPassengers();
 
     bool isInPlanning();
     void setInPlanning(bool inPlanning);

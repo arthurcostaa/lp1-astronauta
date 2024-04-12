@@ -20,7 +20,7 @@ void Flight::setCode(int code) {
     this->code = code;
 }
 
-vector<Astronaut*> Flight::getPassengers() {
+vector<Astronaut*>& Flight::getPassengers() {
     return this->passengers;
 }
 
@@ -128,6 +128,7 @@ bool Flight::finish() {
         this->finished = true;
 
         for (Astronaut* passenger : this->passengers) {
+            passenger->addCodeFlight(this->getCode());
             passenger->setAvailable(true);
         }
 
