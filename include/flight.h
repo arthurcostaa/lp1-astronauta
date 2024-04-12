@@ -12,6 +12,7 @@ private:
     bool inPlanning;
     bool inProgress;
     bool exploded;
+    bool finished;
 
 public:
     Flight();
@@ -32,6 +33,9 @@ public:
     bool isExploded();
     void setExploded(bool exploded);
 
+    bool isFinished();
+    void setFinished(bool finished);
+
     int getNumPassengers();
 
     bool addAstronaut(Astronaut* astronaut);
@@ -41,6 +45,8 @@ public:
     bool launch();
 
     bool explode();
+
+    bool finish();
 };
 
 #endif // FLIGHT_H

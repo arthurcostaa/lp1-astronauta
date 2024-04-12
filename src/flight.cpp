@@ -7,6 +7,7 @@ Flight::Flight(int code) {
     this->inPlanning = true;
     this->inProgress = false;
     this->exploded = false;
+    this->finished = false;
 }
 
 Flight::~Flight() {}
@@ -45,6 +46,14 @@ bool Flight::isExploded() {
 
 void Flight::setExploded(bool exploded) {
     this->exploded = exploded;
+}
+
+bool Flight::isFinished() {
+    return this->finished;
+}
+
+void Flight::setFinished(bool finished) {
+    this->finished = finished;
 }
 
 int Flight::getNumPassengers() {
@@ -105,6 +114,21 @@ bool Flight::explode() {
 
         for (Astronaut* passenger : this->passengers) {
             passenger->setAlive(false);
+        }
+
+        return true;
+    }
+
+    return false;
+}
+
+bool Flight::finish() {
+    if (inProgress) {
+        this->inProgress = false;
+        this->finished = true;
+
+        for (Astronaut* passenger : this->passengers) {
+            passenger->setAvailable(true);
         }
 
         return true;
