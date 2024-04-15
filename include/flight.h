@@ -38,7 +38,7 @@ public:
 
     int getNumPassengers();
 
-    bool addAstronaut(Astronaut* astronaut);
+    bool addAstronaut(Astronaut* newAstronaut);
 
     bool removeAstronaut(string cpf);
 

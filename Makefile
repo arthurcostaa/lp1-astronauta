@@ -10,10 +10,10 @@ CFLAGS = -I$(INCLUDE_DIR) -pedantic -Wall -Wextra -ansi -std=c++11
 
 EXECUTABLE = $(BIN_DIR)/$(NAME)
 
-_DEPS = astronaut.h flight.h
+_DEPS = astronaut.h flight.h space_command.h
 DEPS = $(patsubst %,$(INCLUDE_DIR)/%,$(_DEPS))
 
-_OBJS = main.o astronaut.o flight.o
+_OBJS = main.o astronaut.o flight.o space_command.o
 OBJS = $(patsubst %,$(OBJ_DIR)/%,$(_OBJS))
 
 all: directories $(EXECUTABLE)

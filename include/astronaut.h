@@ -37,7 +37,7 @@ public:
     bool isAlive();
     void setAlive(bool alive);
 
-    void addCodeFlight(int newCode);
+    bool addCodeFlight(int newCode);
 
     void showCodeFlights();
 };

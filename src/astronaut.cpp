@@ -60,14 +60,15 @@ void Astronaut::setAlive(bool alive) {
     this->alive = alive;
 }
 
-void Astronaut::addCodeFlight(int newCode) {
+bool Astronaut::addCodeFlight(int newCode) {
     for (int code : missionsFlown) {
         if (newCode == code) {
-            return;
+            return false;
         }
     }
 
     missionsFlown.push_back(newCode);
+    return true;
 }
 
 void Astronaut::showCodeFlights() {

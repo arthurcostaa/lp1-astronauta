@@ -60,9 +60,10 @@ int Flight::getNumPassengers() {
     return this->passengers.size();
 }
 
-bool Flight::addAstronaut(Astronaut* astronaut) {
+bool Flight::addAstronaut(Astronaut* newAstronaut) {
     if (inPlanning) {
-        passengers.push_back(astronaut);
+        // TODO: Don't add an astronaut that is already in the flight
+        passengers.push_back(newAstronaut);
         return true;
     }
 
