@@ -40,7 +40,7 @@ void Astronaut::setAge(int age) {
     this->age = age;
 }
 
-vector<int>& Astronaut::getMissionsFlown() {
+list<int>& Astronaut::getMissionsFlown() {
     return this->missionsFlown;
 }
 
@@ -60,23 +60,26 @@ void Astronaut::setAlive(bool alive) {
     this->alive = alive;
 }
 
-bool Astronaut::addCodeFlight(int newCode) {
-    for (int code : missionsFlown) {
+void Astronaut::addCodeFlight(int newCode) {
+    if (!alive) {
+        return;
+    }
+
+    for (int code : this->missionsFlown) {
         if (newCode == code) {
-            return false;
+            return;
         }
     }
 
     missionsFlown.push_back(newCode);
-    return true;
 }
 
-void Astronaut::showCodeFlights() {
-    for (int i = 0; i < (int) missionsFlown.size(); i++) {
-        int code = missionsFlown[i];
-
-        cout << (i == 0 ? "" : ", ") << code;
+void Astronaut::showCodeFlights() {;
+    for (auto it = missionsFlown.begin(); it != missionsFlown.end(); it++) {
+        cout << (it == missionsFlown.begin() ? "" : ", ") << *it;
     }
 
-    cout << endl;
+    if (missionsFlown.size() > 0) {
+        cout << endl;
+    }
 }

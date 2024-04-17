@@ -2,7 +2,7 @@
 #define ASTRONAUT_H
 
 #include <string>
-#include <vector>
+#include <list>
 
 using namespace std;
 
@@ -10,7 +10,7 @@ class Astronaut {
 private:
     string cpf;
     string name;
-    vector<int> missionsFlown;
+    list<int> missionsFlown;
     int age;
     bool available;
     bool alive;
@@ -29,7 +29,7 @@ public:
     int getAge();
     void setAge(int age);
 
-    vector<int>& getMissionsFlown();
+    list<int>& getMissionsFlown();
 
     bool isAvailable();
     void setAvailable(bool available);
@@ -37,7 +37,7 @@ public:
     bool isAlive();
     void setAlive(bool alive);
 
-    bool addCodeFlight(int newCode);
+    void addCodeFlight(int newCode);
 
     void showCodeFlights();
 };

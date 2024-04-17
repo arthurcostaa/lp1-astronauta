@@ -1,14 +1,14 @@
 #ifndef FLIGHT_H
 #define FLIGHT_H
 
-#include <vector>
+#include <list>
 
 #include "astronaut.h"
 
 class Flight {
 private:
     int code;
-    vector<Astronaut*> passengers;
+    list<Astronaut*> passengers;
     bool inPlanning;
     bool inProgress;
     bool exploded;
@@ -22,7 +22,7 @@ public:
     int getCode();
     void setCode(int code);
 
-    vector<Astronaut*>& getPassengers();
+    list<Astronaut*>& getPassengers();
 
     bool isInPlanning();
     void setInPlanning(bool inPlanning);

@@ -20,7 +20,7 @@ void Flight::setCode(int code) {
     this->code = code;
 }
 
-vector<Astronaut*>& Flight::getPassengers() {
+list<Astronaut*>& Flight::getPassengers() {
     return this->passengers;
 }
 
@@ -62,7 +62,18 @@ int Flight::getNumPassengers() {
 
 bool Flight::addAstronaut(Astronaut* newAstronaut) {
     if (inPlanning) {
-        // TODO: Don't add an astronaut that is already in the flight
+        if (!newAstronaut->isAlive()) {
+            return false;
+        }
+
+        // Don't add an astronaut that is already in the flight
+        // to avoid duplicated values
+        for (Astronaut* a : passengers) {
+            if (a->getCpf() == newAstronaut->getCpf()) {
+                return false;
+            }
+        }
+
         passengers.push_back(newAstronaut);
         return true;
     }
@@ -72,9 +83,9 @@ bool Flight::addAstronaut(Astronaut* newAstronaut) {
 
 bool Flight::removeAstronaut(string cpf) {
     if (inPlanning) {
-        for (int i = 0; i < (int) passengers.size(); i++) {
-            if (passengers[i]->getCpf() == cpf) {
-                passengers.erase(passengers.begin() + i);
+        for (Astronaut* a : passengers) {
+            if (a->getCpf() == cpf) {
+                passengers.remove(a);
                 return true;
             }
         }
@@ -89,17 +100,18 @@ bool Flight::launch() {
             return false;
         }
 
-        for (Astronaut* passenger : this->passengers) {
-            if (!passenger->isAvailable()) {
+        // All astronauts must be available and alive to lauch the rocket
+        for (Astronaut* a : this->passengers) {
+            if (!a->isAvailable() && !a->isAlive()) {
                 return false;
             }
         }
 
-        this->inPlanning = false;
-        this->inProgress = true;
+        setInPlanning(false);
+        setInProgress(true);
 
-        for (Astronaut* passenger : this->passengers) {
-            passenger->setAvailable(false);
+        for (Astronaut* a : this->passengers) {
+            a->setAvailable(false);
         }
 
         return true;
@@ -110,11 +122,12 @@ bool Flight::launch() {
 
 bool Flight::explode() {
     if (inProgress) {
-        this->inProgress = false;
-        this->exploded = true;
+        setInProgress(false);
+        setExploded(true);
 
-        for (Astronaut* passenger : this->passengers) {
-            passenger->setAlive(false);
+        for (Astronaut* a : this->passengers) {
+            a->setAlive(false);
+            a->setAvailable(false);
         }
 
         return true;
@@ -125,12 +138,12 @@ bool Flight::explode() {
 
 bool Flight::finish() {
     if (inProgress) {
-        this->inProgress = false;
-        this->finished = true;
+        setInProgress(false);
+        setFinished(true);
 
-        for (Astronaut* passenger : this->passengers) {
-            passenger->addCodeFlight(this->getCode());
-            passenger->setAvailable(true);
+        for (Astronaut* a : this->passengers) {
+            a->addCodeFlight(this->getCode());
+            a->setAvailable(true);
         }
 
         return true;
