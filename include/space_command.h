@@ -1,36 +1,39 @@
 #ifndef SPACE_COMMAND_H
 #define SPACE_COMMAND_H
 
-#include <vector>
+#include <list>
 
 #include "astronaut.h"
 #include "flight.h"
 
 class SpaceCommand {
 private:
-    vector<Astronaut*> astronauts;
-    vector<Flight*> flights;
+    list<Astronaut*> astronauts;
+    list<Flight*> flights;
 
-    Astronaut* createAstronaut();
-    Flight* createFlight();
-    void showOptions();
 public:
     SpaceCommand();
     ~SpaceCommand();
 
-    vector<Astronaut*> getAstronauts();
-    void setAstronauts(vector<Astronaut*> astronauts);
+    list<Astronaut*> getAstronauts();
+    void setAstronauts(list<Astronaut*> astronauts);
 
-    vector<Flight*> getFlights();
-    void setFlights(vector<Flight*> flights);
+    list<Flight*> getFlights();
+    void setFlights(list<Flight*> flights);
 
-    void registerNewAstronaut();
+    bool registerNewAstronaut(Astronaut* newAstronat);
 
-    void registerNewFlight();
+    bool registerNewFlight(Flight* newFlight);
 
-    void addAstronautToFlight();
+    bool addAstronautToFlight(int flightCode, string cpf);
 
-    void menu();
+    bool removeAstronautFromFlight(int flightCode, string cpf);
+
+    bool lauchFlight(int flightCode);
+
+    bool explodeFlight(int flightCode);
+
+    bool finishFlight(int flightCode);
 };
 
 #endif // SPACE_COMMAND_H

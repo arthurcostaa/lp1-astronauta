@@ -8,144 +8,169 @@ using namespace std;
 SpaceCommand::SpaceCommand() {}
 
 SpaceCommand::~SpaceCommand() {
-    for (int i = 0; i < (int) this->astronauts.size(); i++) {
-        delete this->astronauts[i];
+    for (Astronaut* t : this->astronauts) {
+        delete t;
     }
 
-    for (int i = 0; i < (int) this->flights.size(); i++) {
-        delete this->flights[i];
+    for (Flight* f : this->flights) {
+        delete f;
     }
 }
 
-vector<Astronaut*> SpaceCommand::getAstronauts() {
+list<Astronaut*> SpaceCommand::getAstronauts() {
     return this->astronauts;
 }
 
-void SpaceCommand::setAstronauts(vector<Astronaut*> astronauts) {
+void SpaceCommand::setAstronauts(list<Astronaut*> astronauts) {
     this->astronauts = astronauts;
 }
 
-vector<Flight*> SpaceCommand::getFlights() {
+list<Flight*> SpaceCommand::getFlights() {
     return this->flights;
 }
 
-void SpaceCommand::setFlights(vector<Flight*> flights) {
+void SpaceCommand::setFlights(list<Flight*> flights) {
     this->flights = flights;
 }
 
-Astronaut* SpaceCommand::createAstronaut() {
-    string name, cpf;
-    int age;
+bool SpaceCommand::registerNewAstronaut(Astronaut* newAstronat) {
+    for (Astronaut* a : this->astronauts) {
+        if (a->getCpf() == newAstronat->getCpf()) {
+            return false;
+        }
+    }
 
-    cout << "Nome: ";
-    cin >> name;
-    cout << "CPF: ";
-    cin >> cpf;
-    cout << "Idade: ";
-    cin >> age;
+    if (!newAstronat->isAlive() || !newAstronat->isAvailable()) {
+        return false;
+    }
 
-    Astronaut* astronat = new Astronaut(cpf, name, age);
-    return astronat;
+    this->astronauts.push_back(newAstronat);
+    return true;
 }
 
-void SpaceCommand::registerNewAstronaut() {
-    Astronaut* astronaut = createAstronaut();
-    this->astronauts.push_back(astronaut);
+bool SpaceCommand::registerNewFlight(Flight* newFlight) {
+    for (Flight* f : this->flights) {
+        if (f->getCode() == newFlight->getCode()) {
+            return false;
+        }
+    }
+
+    if (newFlight->isInProgress() || newFlight->isFinished() || newFlight->isExploded()) {
+        return false;
+    }
+
+    this->flights.push_back(newFlight);
+    return true;
 }
 
-Flight* SpaceCommand::createFlight() {
-    int code;
+bool SpaceCommand::addAstronautToFlight(int flightCode, string cpf) {
+    bool flightNotFound = true, astronautNotFound = true;
+    Flight* flight;
+    Astronaut* astronaut;
 
-    cout << "Código: ";
-    cin >> code;
-
-    Flight* flight = new Flight(code);
-
-    return flight;
-}
-
-void SpaceCommand::registerNewFlight() {
-    Flight* flight = createFlight();
-    this->flights.push_back(flight);
-}
-
-void SpaceCommand::addAstronautToFlight() {
-    Astronaut* astronaut = nullptr;
-    Flight* flight = nullptr;
-    string cpf;
-    int code;
-
-    cout << "Digite o código do voo: " << endl;
-    cin >> code;
-    cout << "Digite o CPF do astronauta: ";
-    cin >> cpf;
-
-    for (Flight* f : flights) {
-        if (f->getCode() == code) {
+    for (Flight* f : this->flights) {
+        if (f->getCode() == flightCode) {
+            flightNotFound = false;
             flight = f;
-            break;
         }
     }
-    if (flight == nullptr) {
-        cout << "ERRO. Não há voo com esse código." << endl;
-        return;
+
+    if (flightNotFound) {
+        return false;
     }
 
-    for (Astronaut* a : astronauts) {
+    for (Astronaut* a : this->astronauts) {
         if (a->getCpf() == cpf) {
+            astronautNotFound = false;
             astronaut = a;
-            break;
         }
     }
-    if (astronaut == nullptr) {
-        cout << "ERRO. Não há astronauta com esse CPF." << endl;
-        return;
+
+    if (astronautNotFound) {
+        return false;
     }
 
-    if (flight->addAstronaut(astronaut)) {
-        cout << "Astronauta " << astronaut->getName()
-             << " (" << astronaut->getCpf() << ") "
-             << "adicionado com sucesso no voo "
-             << flight->getCode() << "." << endl;
-    } else {
-        cout << "NÃO foi possível adicionar o astronauta no voo"
-             << flight->getCode() << "." << endl;
-    }
+    return flight->addAstronaut(astronaut);
 }
 
-void SpaceCommand::showOptions() {
-    cout << "========================================" << endl;
-    cout << "1. Cadastrar novo voo" << endl;
-    cout << "2. Cadastrar novo astronauta" << endl;
-    cout << "3. Adicionar astronauta em um voo (por CPF)" << endl;
-    cout << "0. Encerrar programa" << endl;
-    cout << "========================================" << endl;
-    cout << "Digite a opção desejada: ";
-}
+bool SpaceCommand::removeAstronautFromFlight(int flightCode, string cpf) {
+    bool flightNotFound = true, astronautNotFound = true;
+    Flight* flight;
 
-void SpaceCommand::menu() {
-    int option;
-
-    while (true) {
-        showOptions();
-        cin >> option;
-
-        switch (option) {
-            case 0:
-                cout << "Programa encerrado." << endl;
-                return;
-            case 1:
-                this->registerNewFlight();
-                break;
-            case 2:
-                this->registerNewAstronaut();
-                break;
-            case 3:
-                this->addAstronautToFlight();
-                break;
-            default:
-                cout << "Opção inválida. Tente novamente." << endl;
-                break;
+    for (Flight* f : this->flights) {
+        if (f->getCode() == flightCode) {
+            flightNotFound = false;
+            flight = f;
         }
     }
+
+    if (flightNotFound) {
+        return false;
+    }
+
+    for (Astronaut* a : this->astronauts) {
+        if (a->getCpf() == cpf) {
+            astronautNotFound = false;
+        }
+    }
+
+    if (astronautNotFound) {
+        return false;
+    }
+
+    return flight->removeAstronaut(cpf);
+}
+
+bool SpaceCommand::lauchFlight(int flightCode) {
+    bool flightNotFound = true;
+    Flight* flight;
+
+    for (Flight* f : this->flights) {
+        if (f->getCode() == flightCode) {
+            flightNotFound = false;
+            flight = f;
+        }
+    }
+
+    if (flightNotFound) {
+        return false;
+    }
+
+    return flight->launch();
+}
+
+bool SpaceCommand::explodeFlight(int flightCode) {
+    bool flightNotFound = true;
+    Flight* flight;
+
+    for (Flight* f : this->flights) {
+        if (f->getCode() == flightCode) {
+            flightNotFound = false;
+            flight = f;
+        }
+    }
+
+    if (flightNotFound) {
+        return false;
+    }
+
+    return flight->explode();
+}
+
+bool SpaceCommand::finishFlight(int flightCode) {
+    bool flightNotFound = true;
+    Flight* flight;
+
+    for (Flight* f : this->flights) {
+        if (f->getCode() == flightCode) {
+            flightNotFound = false;
+            flight = f;
+        }
+    }
+
+    if (flightNotFound) {
+        return false;
+    }
+
+    return flight->finish();
 }
