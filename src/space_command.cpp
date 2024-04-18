@@ -174,3 +174,44 @@ bool SpaceCommand::finishFlight(int flightCode) {
 
     return flight->finish();
 }
+
+void SpaceCommand::showAstronautsOfFlight(Flight* f) {
+    for (Astronaut* a : f->getPassengers()) {
+        cout << "  - " << a << endl;
+    }
+}
+
+void SpaceCommand::showFlights() {
+    for (Flight* f : flights) {
+        cout << "CÓDIGO DO VOO: " << f->getCode() << endl;
+
+        cout << "STATUS: ";
+        if (f->isInPlanning()) {
+            cout << "Em plajenamento" << endl;
+        } else if (f->isInProgress()) {
+            cout << "Em andamento" << endl;
+        } else if (f->isFinished()) {
+            cout << "Voo finalizado com sucesso" << endl;
+        } else if (f->isExploded()) {
+            cout << "Voo finalizado sem sucesso (explosão)" << endl;
+        }
+
+        cout << "PARTICIPANTES:" << endl;
+        showAstronautsOfFlight(f);
+        cout << endl;
+    }
+}
+
+void SpaceCommand::showDeadAstronauts() {
+    int total = 0;
+
+    for (Astronaut* a : this->astronauts) {
+        if (!a->isAlive()) {
+            total++;
+            cout << a << " participou dos voos: ";
+            a->showCodeFlights();
+        }
+    }
+
+    cout << total << " astronautas morreram." << endl;
+}

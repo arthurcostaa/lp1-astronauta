@@ -11,6 +11,8 @@ private:
     list<Astronaut*> astronauts;
     list<Flight*> flights;
 
+    void showAstronautsOfFlight(Flight* f);
+
 public:
     SpaceCommand();
     ~SpaceCommand();
@@ -34,6 +36,10 @@ public:
     bool explodeFlight(int flightCode);
 
     bool finishFlight(int flightCode);
+
+    void showFlights();
+
+    void showDeadAstronauts();
 };
 
 #endif // SPACE_COMMAND_H

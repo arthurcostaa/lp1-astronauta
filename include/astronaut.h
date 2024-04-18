@@ -40,6 +40,8 @@ public:
     void addCodeFlight(int newCode);
 
     void showCodeFlights();
+
+    friend ostream& operator<<(ostream &o, Astronaut* const a);
 };
 
 #endif // ASTRONAUT_H

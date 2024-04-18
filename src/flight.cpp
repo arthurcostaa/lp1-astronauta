@@ -102,7 +102,7 @@ bool Flight::launch() {
 
         // All astronauts must be available and alive to lauch the rocket
         for (Astronaut* a : this->passengers) {
-            if (!a->isAvailable() && !a->isAlive()) {
+            if (!a->isAvailable() || !a->isAlive()) {
                 return false;
             }
         }

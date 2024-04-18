@@ -83,3 +83,8 @@ void Astronaut::showCodeFlights() {;
         cout << endl;
     }
 }
+
+ostream& operator<<(ostream &o, Astronaut* const a) {
+    o << a->name << " (" << a->cpf << ")";
+    return o;
+}
