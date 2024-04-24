@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "space_command.h"
 #include "space_agency.h"
 
