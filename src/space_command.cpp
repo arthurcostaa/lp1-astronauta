@@ -5,16 +5,18 @@
 
 using namespace std;
 
-SpaceCommand::SpaceCommand() {}
-
 SpaceCommand::~SpaceCommand() {
-    for (Astronaut* t : this->astronauts) {
-        delete t;
+    for (Astronaut* a : this->astronauts) {
+        delete a;
     }
+
+    astronauts.clear();
 
     for (Flight* f : this->flights) {
         delete f;
     }
+
+    flights.clear();
 }
 
 list<Astronaut*> SpaceCommand::getAstronauts() {
@@ -182,7 +184,7 @@ void SpaceCommand::showAstronautsOfFlight(Flight* f) {
 }
 
 void SpaceCommand::showFlights() {
-    for (Flight* f : flights) {
+    for (Flight* f : this->flights) {
         cout << "CÓDIGO DO VOO: " << f->getCode() << endl;
 
         cout << "STATUS: ";

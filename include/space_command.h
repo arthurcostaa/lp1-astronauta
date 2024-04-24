@@ -14,7 +14,6 @@ private:
     void showAstronautsOfFlight(Flight* f);
 
 public:
-    SpaceCommand();
     ~SpaceCommand();
 
     list<Astronaut*> getAstronauts();
