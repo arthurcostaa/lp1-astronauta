@@ -38,6 +38,8 @@ public:
 
     void showFlights();
 
+    void showAstronauts();
+
     void showDeadAstronauts();
 };
 

@@ -204,6 +204,21 @@ void SpaceCommand::showFlights() {
     }
 }
 
+void SpaceCommand::showAstronauts() {
+    if (astronauts.size() < 1) {
+        cout << endl << "Não há astronautas cadastrados." << endl << endl;
+        return;
+    }
+
+    cout << endl << "LISTA DE ASTRONAUTAS:" << endl << endl;
+
+    for (Astronaut* a : this->astronauts) {
+        cout << "* " << a << endl;
+    }
+
+    cout << endl;
+}
+
 void SpaceCommand::showDeadAstronauts() {
     int total = 0;
 

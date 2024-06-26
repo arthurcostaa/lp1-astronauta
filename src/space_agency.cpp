@@ -25,7 +25,8 @@ void SpaceAgency::showOptions() {
     cout << "6. Finalizar um voo" << endl;
     cout << "7. Explodir um voo" << endl;
     cout << "8. Mostrar todos os voos" << endl;
-    cout << "9. Listar astronautas mortos" << endl;
+    cout << "9. Listar astronautas" << endl;
+    cout << "10. Listar astronautas mortos" << endl;
     cout << "0. Encerrar programa" << endl;
 }
 
@@ -178,6 +179,9 @@ void SpaceAgency::run() {
                 cout << endl;
                 break;
             case 9:
+                spaceCommand->showAstronauts();
+                break;
+            case 10:
                 cout << endl;
                 spaceCommand->showDeadAstronauts();
                 cout << endl;

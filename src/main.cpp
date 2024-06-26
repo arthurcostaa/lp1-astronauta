@@ -4,11 +4,8 @@
 using namespace std;
 
 int main() {
-    SpaceAgency* aeb = new SpaceAgency();
-
-    aeb->run();
-
-    delete aeb;
+    SpaceAgency aeb = SpaceAgency();
+    aeb.run();
 
     return 0;
 }
